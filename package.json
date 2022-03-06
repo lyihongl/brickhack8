@@ -1,0 +1,25 @@
+{
+  "name": "brickhack8",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel ./src/index.html",
+    "build": "tsc && parcel build ./src/index.html",
+    "serve": "node server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "wglt": "^0.2.5"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "parcel-bundler": "^1.12.5",
+    "phaser": "^3.55.2",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1"
+  }
+}
