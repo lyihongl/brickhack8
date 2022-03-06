@@ -37,20 +37,49 @@ const parentGui = new GUI(term, new DefaultDialogRenderer())
 
 var socket = io.io();
 
-const keys  = ["Brief case code", "Key1", "Phone number", "Phone number", "Morse code", "Key3"]
-const dialog1 = ["", "Seems like you need a code...", "Seems like you need a key...", "Hmm theres a phone, but no contacts", "A morse code lock??"]
-const dialog2 = ["There seems to be a code, but its quite blurry.\nAsk your parent(s) what their highschool graduation\
-was like,\nmaybe it will help you get a clearer picture", "Theres another key but its stuck!\nAsk your parent(s) what's their favorite traditional holiday",
-"Maybe your parent(s) know who you need to call\nAsk them how they met"]
+const keys  = ["Brief case code", "Phone number", "Exit code", "Phone number", "Morse code", "Key3"]
+const dialog1 = ["", "Seems like you need a code...", "Seems like theres no contacts...", "You try the door but theres a number pad", "A morse code lock??"]
+const dialog2 = ["There seems to be a code, but its quite blurry.\n\
+Share what it was like growing up. What was the environment like?\n\
+What were living conditions like?\n\
+If you went to school, what was the education system like?", "Hmm a phone number?!\nLooking back, given the age of your child playing this game with you,\n\
+what were you doing at their age?\n\
+Share similarities or differences that you experienced at their age.",
+"Maybe your parent(s) know who you need to call to get the code for the door\nWhat were some traditions that were done when you were growing up?\n\
+Was anything done on holiday's like the new year? "]
 const dialog3 = []
+
+const displays =[
+    "  |==|  \n"+
+    "|******|\n"+
+    "|      |\n"+
+    "|      |\n"+
+    "|______|",
+    "  |==|  \n"+
+    "[**[]**]\n"+
+    "[      ]\n"+
+    "[      ]\n"+
+    "[______]",
+    "|***|\n"+
+    "|___|\n"+
+    "|xxx|\n"+
+    "|xxx|\n"+
+    "|xxx|\n"
+    ,
+    "|***|\n"+
+    "|___|\n"+
+    "|   |\n"+
+    "|x  |\n"+
+    "|   |\n"
+]
 
 let generateInteractives = () => {
     let a: Interactive[] = [];
-    for(let i = 0; i<3; i++){
+    for(let i = 0; i<4; i++){
         a.push({
-            data: [dialog1[i], dialog2[i], ""],
+            data: [dialog1[i], dialog2[i], i == 3? "Congraduations, you've escaped":"Prompt already cleared"],
             location: interactiveLocations[i],
-            display: ""+(i+1),
+            display: displays[i],
             displayF: (inv: Set<string>) => {
                 if(inv.has(keys[i])){
                     return 2;
@@ -94,9 +123,9 @@ socket.on("iop-req", (args)=>{
 let inventory:Set<string> = new Set();
 let renderInv = (term:Terminal) => {
     let i = 0;
-    term.drawString(1, 19, "Inventory:");
+    term.drawString(1, 25, "Inventory:");
     inventory.forEach((it) => {
-        term.drawString(1, 20+i, it);
+        term.drawString(1, 26+i, it);
         i++
     })
 }
